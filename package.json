@@ -1,0 +1,12 @@
+{
+  "name": "bookmarklet_manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "background.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Filype Pereira <pereira.filype@gmail.com>",
+  "license": "MIT"
+}
