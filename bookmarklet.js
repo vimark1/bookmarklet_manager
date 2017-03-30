@@ -1,1 +1,1 @@
-(function() { var storyname = $('.maximized .story.name').text().trim(); var url = window.location.href; alert(storyname + ' - ' + url); })();
+alert('worked');
