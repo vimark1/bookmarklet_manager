@@ -22,13 +22,7 @@ function sync(bookmarkBarId, bookmarkletFunctions) {
   createOrReuseFolder(bookmarkBarId, newBookmarkFolder, function(folderId) {
     var count = 0;
     bookmarkletFunctions.forEach(function(func, idx) {
-      var funcAsString = func.toString();
-      var funcExecStatement = func.name + '.call(this);';
-      var newBookmark = {
-        title: func.name,
-        parentId: folderId,
-        url: 'javascript:(function() { ' + funcAsString + funcExecStatement + ' })();'
-      }
+      var newBookmark = createBookmarkFromFunction(folderId, func);
       syncBookmark(folderId, newBookmark, function(newBookmark) {
         if(++count === bookmarkletFunctions.length) {
           debug('Bookmarklet sync completed');
@@ -87,9 +81,25 @@ function syncBookmark(folderId, newBookmark, callback) {
     } else {
       // when bookmark doesnt exist yet
       chrome.bookmarks.create(newBookmark, function(createdBookmark) {
+        debug('created new bookmark ' + newBookmark.title);
         return callback(createdBookmark.id);
       });
     }
   });
+}
+
+/**
+ * Takes a javascript function and converts it to a bookmark object
+ * accepted by chrome
+ */
+function createBookmarkFromFunction(parentId, func) {
+  var funcAsString = func.toString();
+  var funcExecStatement = func.name + '.call(this);';
+  var newBookmark = {
+    title: func.name,
+    parentId: parentId,
+    url: 'javascript:(function() { ' + funcAsString + funcExecStatement + ' })();'
+  }
+  return newBookmark;
 }
 
