@@ -23,7 +23,7 @@ export default class BookmarkletChrome {
 
     const newBookmarkFolder = {
       parentId: bookmarkBarId,
-      title: 'Bookmarklet manager (do not edit)'
+      title: 'Bookmarklet manager'
     };
 
     return new Promise(function(resolve, reject) {

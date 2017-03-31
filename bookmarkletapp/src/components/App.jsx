@@ -1,8 +1,11 @@
 import React from 'react';
 import BookmarkletGenerator from './BookmarkletGenerator';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 const App = () => (
-  <BookmarkletGenerator />
+  <MuiThemeProvider>
+    <BookmarkletGenerator />
+  </MuiThemeProvider>
 );
 
 export default App;

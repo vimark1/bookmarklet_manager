@@ -8,13 +8,12 @@
 
 body {
   font-size: 18px;
-  padding: 2em;
+  // padding: 1em 2em;
 }
 
-.source-container {
+.source-container .ReactCodeMirror {
   min-height: @editor-min-height;
-  border-top: 1px solid @border-color;
-  flex: 1;
+  border: 1px solid @border-color;
 }
 
 .source-container .CodeMirror,
@@ -22,7 +21,18 @@ body {
   height: 100%;
 }
 
-.save-btn {
-  min-width: 240px;
-  cursor: pointer;
+.bookmarklet-generator {
+  margin: 2em;
+}
+
+.editor-wrap {
+  .source-container {
+    width: 76%;
+    float: left;
+  }
+
+  .sidebar {
+    width: 20%;
+    float: right;
+  }
 }
