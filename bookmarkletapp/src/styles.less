@@ -6,115 +6,23 @@
 @page-min-height: 500px;
 @editor-min-height: 200px;
 
-html {
-	font-size: 18px;
-}
-
-a {
-	text-decoration: none;
-
-	&:hover {
-		text-decoration: underline;
-	}
-}
-
-html,
-body,
-#app,
-.app {
-	width: 100%;
-	height: 100%;
-	margin: 0;
-	padding: 0;
-}
-
-.app {
-	display: flex;
-	flex-direction: column;
-	overflow: auto;
-	min-height: @page-min-height;
-}
-
-.app h1 {
-	margin: 0.25rem 0;
-	padding: 0;
-}
-
-.app h1 a {
-	display: inline-block;
-	padding: 0.5rem;
-}
-
-.bookmarklet-generator {
-	flex: 1;
-	display: flex;
-	flex-direction: column;
-}
-
-.bookmarklet-header {
-	display: flex;
-	flex-direction: row;
-	margin-bottom: 0.5em;
-}
-
-.bookmarklet-header > div {
-	flex: 1;
-	display: flex;
-	flex-direction: column;
-	align-content: space-between;
-}
-
-.bookmarklet-header label,
-.bookmarklet-header p {
-	margin: 0;
-	padding: 0.5em;
-	font-weight: bold;
-	flex: 1;
-}
-
-.bookmarklet-header p {
-	cursor: default;
-}
-
-.title-container {
-	margin-right: 0.5em;
-}
-
-.title-container br {
-	display: none;
-}
-
-.bookmarklet-title {
-	padding: @title-padding;
-	width: 100%;
-	border: 1px solid @border-color;
-	box-sizing: border-box;
-}
-
-.bookmarklet {
-	@bg-color: #eee;
-
-	display: block;
-	padding: @title-padding;
-	background-color: @bg-color;
-	border: 1px solid @border-color;
-	cursor: -moz-grab;
-	cursor: -webkit-grab;
-	cursor: grab;
-	min-height: 1.125em;
-
-	&:hover {
-		background-color: darken(@bg-color, 2.5%);
-	}
+body {
+  font-size: 18px;
+  padding: 2em;
 }
 
 .source-container {
-	min-height: @editor-min-height;
-	border-top: 1px solid @border-color;
-	flex: 1;
+  min-height: @editor-min-height;
+  border-top: 1px solid @border-color;
+  flex: 1;
 }
 
 .source-container .CodeMirror,
 .source-container .ReactCodeMirror {
-	height: 100%;
+  height: 100%;
+}
+
+.save-btn {
+  min-width: 240px;
+  cursor: pointer;
 }

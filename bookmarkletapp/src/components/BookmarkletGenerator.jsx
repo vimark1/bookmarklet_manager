@@ -1,115 +1,96 @@
 import React, { Component } from 'react';
 import CodeMirror from 'react-codemirror';
-import Bookmarklet from './Bookmarklet';
 import { js_beautify as beautify } from 'js-beautify';
+
+import safeEval from 'safe-eval';
 
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/keymap/vim';
 
+import BookmarkletChrome from '../Chrome.jsx'
+
 const LOCAL_STORAGE_KEY = 'bookmarklet-generator-state';
 
 export default class BookmarkletGenerator extends Component {
-	constructor (props) {
-		super(props);
-		this.state = this.retrieveState() || {
-			source: '',
-			title: 'Untitled bookmarklet',
-		};
-		this.editorOptions = {
-			mode: 'javascript',
-			keyMap: 'default',
-			lineNumbers: true,
-		};
-		this.handleDragover = this.handleDragover.bind(this);
-		this.handleDrop = this.handleDrop.bind(this);
-		this.updateSource = this.updateSource.bind(this);
-	}
+  constructor (props) {
+    super(props);
+    this.state = this.retrieveState() || {
+      source: '',
+      title: 'Untitled bookmarklet',
+    };
+    this.editorOptions = {
+      mode: 'javascript',
+      keyMap: 'default',
+      lineNumbers: true,
+    };
+    this.chrome = new BookmarkletChrome();
+    this.updateSource = this.updateSource.bind(this);
+    this.saveSource = this.saveSource.bind(this);
+    // this.updateEditorKeymap = this.updateEditorKeymap.bind(this);
+  }
 
-	componentDidMount () {
-		window.addEventListener('dragover', this.handleDragover);
-		window.addEventListener('drop', this.handleDrop);
-	}
+  componentDidMount () {
+  }
 
-	componentWillUnmount () {
-		window.removeEventListener('dragover', this.handleDragover);
-		window.removeEventListener('drop', this.handleDrop);
-	}
+  componentWillUnmount () {
+  }
 
-	handleDragover (e) {
-		e.preventDefault();
-	}
+  persistState (state) {
+    try {
+      const serialized = JSON.stringify(state);
+      localStorage.setItem(LOCAL_STORAGE_KEY, serialized);
+    } catch (err) {
+      // Ignore errors
+    }
+  }
 
-	handleDrop (e) {
-		e.preventDefault();
-		[...e.dataTransfer.items].forEach((item) => {
-			item.getAsString((str) => {
-				if (str.substring(0, 11) === 'javascript:') {
-					this.importBookmarklet(str);
-				}
-			});
-		});
-	}
+  retrieveState () {
+    try {
+      const serialized = localStorage.getItem(LOCAL_STORAGE_KEY);
+      return JSON.parse(serialized);
+    } catch (err) {
+      return null;
+    }
+  }
 
-	persistState (state) {
-		try {
-			const serialized = JSON.stringify(state);
-			localStorage.setItem(LOCAL_STORAGE_KEY, serialized);
-		} catch (err) {
-			// Ignore errors
-		}
-	}
+  updateSource (source) {
+    this.setState({
+      source,
+    }, () => this.persistState(this.state));
+  }
 
-	retrieveState () {
-		try {
-			const serialized = localStorage.getItem(LOCAL_STORAGE_KEY);
-			return JSON.parse(serialized);
-		} catch (err) {
-			return null;
-		}
-	}
+  saveSource () {
+    const { source } = this.state;
 
-	updateSource (source) {
-		this.setState({
-			source,
-		}, () => this.persistState(this.state));
-	}
+    const updatedSource = `
+      (function Namespace() {
+        ${source}
+        if(main) return main();
+      })();
+    `;
 
-        updateEditorKeymap (keymap) {
-          this.editorOptions.keyMap = keymap;
-          debugger;
-        }
+    const functions = safeEval(updatedSource);
 
-	importBookmarklet (string) {
-		const match = string.match(/^javascript:void\(\(\) ?=> ?{(.*?)}\)\(\);?$/);
-		if (!match) {
-			// Could not detect source
-			// Exit early
-			return;
-		}
-		const contents = match[1];
-		const source = beautify(contents, {
-			indent_size: 2,
-		});
-		this.updateSource(source);
-	}
+    this.chrome.sync(functions)
+      .then(result => console.info(result))
+      .catch(err => alert(`Error: ${err}`));
+  }
 
-	render () {
-		const { source } = this.state;
-		return (
-			<div className="bookmarklet-generator">
-                                <select name="keymap" onChange={this.updateEditorKeymap }>
-                                <option value="default">Default</option>
-                                <option value="vim">Vim</option>
-                                </select>
-                                <br />
-				<div className="source-container">
-					<CodeMirror
-						value={ source }
-						onChange={ this.updateSource }
-						options={ this.editorOptions }
-					/>
-				</div>
-			</div>
-		);
-	}
+  updateEditorKeymap (keymap) {
+    this.editorOptions.keyMap = keymap.target.value;
+  }
+
+  render () {
+    const { source } = this.state;
+    return (
+      <div className="bookmarklet-generator">
+        <p>All you need to do is define your functions here, then define a function called <code>main</code> which returns an array of all the functions you want to create as bookmark</p>
+        <div className="source-container">
+          <CodeMirror value={ source } onChange={ this.updateSource } options={ this.editorOptions } />
+        </div>
+        <br />
+        <button className="save-btn" onClick={ this.saveSource } >Save</button>
+      </div>
+    );
+  }
 }

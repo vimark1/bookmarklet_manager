@@ -5,6 +5,6 @@ import App from './components/App';
 import './styles';
 
 ReactDOM.render(
-	<App />,
-	document.getElementById('app')
+  <App />,
+  document.getElementById('app')
 );

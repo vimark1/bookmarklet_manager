@@ -48,5 +48,8 @@
       "es2015",
       "react"
     ]
+  },
+  "dependencies": {
+    "safe-eval": "^0.3.0"
   }
 }
