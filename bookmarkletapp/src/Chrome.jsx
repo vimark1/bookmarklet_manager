@@ -105,7 +105,6 @@ export default class BookmarkletChrome {
   createBookmarkFromFunction(parentId, func) {
     const title = func.name;
     const url = `javascript:(function() { ${func.toString()} ${title}.call(this); })();`;
-    debugger;
     return {
       title,
       parentId,
