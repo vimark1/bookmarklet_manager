@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import CodeMirror from 'react-codemirror';
 import { js_beautify as beautify } from 'js-beautify';
 
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import { List, ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Avatar from 'material-ui/Avatar';
@@ -18,7 +17,7 @@ import safeEval from 'safe-eval';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/keymap/vim';
 
-import BookmarkletChrome from '../Chrome.jsx'
+import BookmarkletChrome from '../Chrome.jsx';
 
 const LOCAL_STORAGE_KEY = 'bookmarklet-generator-state';
 
