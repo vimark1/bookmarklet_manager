@@ -29,9 +29,9 @@ export default class BookmarkletChrome {
     return new Promise(function(resolve, reject) {
       self.createOrReuseFolder(bookmarkBarId, newBookmarkFolder, function(folderId) {
         var count = 0;
-        bookmarkletFunctions.forEach(function(func, idx) {
+        bookmarkletFunctions.forEach(function(func) {
           var newBookmark = self.createBookmarkFromFunction(folderId, func);
-          self.syncBookmark(folderId, newBookmark, function(newBookmark) {
+          self.syncBookmark(folderId, newBookmark, function() {
             if(++count === bookmarkletFunctions.length) {
               resolve('Bookmarklet sync completed');
             }
@@ -78,7 +78,7 @@ export default class BookmarkletChrome {
       });
       var bookmarkExists = !!existingBookmark.length;
       if(bookmarkExists) {
-        var existingBookmark = existingBookmark[0];
+        existingBookmark = existingBookmark[0];
         if(existingBookmark.url == newBookmark.url) {
           debug('no update required for ' + newBookmark.title);
           return callback(null);
@@ -109,7 +109,7 @@ export default class BookmarkletChrome {
       title,
       parentId,
       url
-    }
+    };
   }
 
 }
