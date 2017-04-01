@@ -3,6 +3,12 @@
   "version": "1.1.0",
   "description": "Create JS bookmarklets",
   "main": "index.js",
+  "scripts": {
+    "build": "cross-env NODE_ENV=production webpack -p",
+    "start": "webpack-dev-server --inline",
+    "eslint": "eslint . --ext .jsx --ext .js",
+    "test": "npm run eslint"
+  },
   "devDependencies": {
     "babel-core": "^6.23.1",
     "babel-loader": "^6.4.0",
@@ -27,12 +33,6 @@
     "style-loader": "^0.13.2",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.4.1"
-  },
-  "scripts": {
-    "build": "cross-env NODE_ENV=production webpack -p",
-    "start": "webpack-dev-server --inline",
-    "eslint": "eslint ./src",
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
