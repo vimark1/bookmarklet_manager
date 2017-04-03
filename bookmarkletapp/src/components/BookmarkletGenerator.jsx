@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import CodeMirror from 'react-codemirror';
-import { js_beautify as beautify } from 'js-beautify';
 
 import { List, ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Avatar from 'material-ui/Avatar';
 import FileFolder from 'material-ui/svg-icons/file/folder';
 import RaisedButton from 'material-ui/RaisedButton';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
+// import SelectField from 'material-ui/SelectField';
+// import MenuItem from 'material-ui/MenuItem';
 
 import { Grid, Row, Col } from 'react-flexbox-grid';
 
