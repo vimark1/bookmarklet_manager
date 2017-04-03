@@ -21,12 +21,16 @@ export default class BookmarkletChrome {
       return Promise.reject('no bookmarklet functions found');
     }
 
+    if(bookmarkletFunctions.some(fun => typeof fun !== 'function')) {
+      return Promise.reject('Not all itmes are functions');
+    }
+
     const newBookmarkFolder = {
       parentId: bookmarkBarId,
       title: 'Bookmarklet manager'
     };
 
-    return new Promise(function(resolve, reject) {
+    return new Promise(function(resolve) {
       self.createOrReuseFolder(bookmarkBarId, newBookmarkFolder, function(folderId) {
         var count = 0;
         bookmarkletFunctions.forEach(function(func) {
