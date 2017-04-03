@@ -6,6 +6,8 @@ import Subheader from 'material-ui/Subheader';
 import Avatar from 'material-ui/Avatar';
 import FileFolder from 'material-ui/svg-icons/file/folder';
 import RaisedButton from 'material-ui/RaisedButton';
+import Snackbar from 'material-ui/Snackbar';
+
 // import SelectField from 'material-ui/SelectField';
 // import MenuItem from 'material-ui/MenuItem';
 
@@ -27,7 +29,14 @@ export default class BookmarkletGenerator extends Component {
       source: '',
       keyMap : 'default',
       title: 'Untitled bookmarklet',
+      error : null,
+      message : null,
+      open : false,
     };
+
+    // state error is always null
+    this.state.error = null;
+
     this.editorOptions = {
       mode: 'javascript',
       keyMap: 'default',
@@ -71,19 +80,21 @@ export default class BookmarkletGenerator extends Component {
 
   saveSource () {
     const { source } = this.state;
-
-    const updatedSource = `
+    const functions = safeEval(`
       (function Namespace() {
         ${source}
         if(main) return main();
       })();
-    `;
-
-    const functions = safeEval(updatedSource);
+    `);
 
     this.chrome.sync(functions)
       .then(result => console.info(result))
-      .catch(err => alert(`Error: ${err}`));
+      .catch(err => {
+        this.setState({
+          open: true,
+          message: `Error: ${err.toString()}`
+        });
+      });
   }
 
   updateEditorKeymap (keymap) {
@@ -120,7 +131,13 @@ export default class BookmarkletGenerator extends Component {
         </Row>
         <Row>
           <Col md={12}>
-            <RaisedButton fullWidth={false} primary={true} label="Save" onTouchTap={ this.saveSource } />
+            <RaisedButton fullWidth={false} primary={true} label="Save" onClick={ this.saveSource } />
+            { /* <pre>{ JSON.stringify(this.state, null, 2) }</pre> */ }
+            <Snackbar
+              open={this.state.open}
+              message={this.state.message}
+              autoHideDuration={3000}
+            />
             <br />
             <br />
           </Col>
