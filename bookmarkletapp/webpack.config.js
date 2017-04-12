@@ -34,6 +34,7 @@ module.exports = {
           'css-loader',
           'less-loader',
         ],
+        exclude: /flexboxgrid/,
         test: /\.(css|less)$/,
       },
     ],
