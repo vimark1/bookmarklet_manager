@@ -1,11 +1,32 @@
 var debug = console.info;
 // var debug = function() {};
 
-export default class BookmarkletChrome {
+class BookmarkManagerInterface {
+  getItems() {}
+  create() {}
+  update() {}
+}
+
+class ChromeBookmarkManager extends BookmarkManagerInterface {
+  getItems(id, callback) {
+    return chrome.bookmarks.getChildren(id, callback);
+  }
+
+  create(bookmarkObject, callback) {
+    return chrome.bookmarks.create(bookmarkObject, callback);
+  }
+
+  update(id, bookmarkObject, callback) {
+    return chrome.bookmarks.update(id, bookmarkObject, callback);
+  }
+}
+
+export default class BrowserBookmarkManager {
 
   constuctor () {
     this.sync = this.sync.bind(this);
     this.createOrReuseFolder = this.createOrReuseFolder.bind(this);
+    this.manager = new ChromeBookmarkManager();
   }
 
   /**
@@ -52,7 +73,8 @@ export default class BookmarkletChrome {
     if(!callback) {
       callback = function() {};
     }
-    chrome.bookmarks.getChildren(parentFolderId, function(children) {
+    const manager = this.manager;
+    manager.getItems(parentFolderId, function(children) {
       var existingFolder = children.filter(function(item) {
         return item.title === newFolder.title;
       });
@@ -60,7 +82,7 @@ export default class BookmarkletChrome {
       if(folderExists) {
         return callback(existingFolder[0].id);
       }
-      chrome.bookmarks.create(newFolder, function(createdFolder) {
+      manager.create(newFolder, function(createdFolder) {
         return callback(createdFolder.id);
       });
     });
@@ -76,7 +98,8 @@ export default class BookmarkletChrome {
     if(!callback) {
       callback = function() {};
     }
-    chrome.bookmarks.getChildren(folderId, function(children) {
+    const manager = this.manager;
+    manager.getItems(folderId, function(children) {
       var existingBookmark = children.filter(function(item) {
         return item.title === newBookmark.title;
       });
@@ -88,13 +111,13 @@ export default class BookmarkletChrome {
           return callback(null);
         }
         var bookmarkUpdates = { url : newBookmark.url };
-        chrome.bookmarks.update(existingBookmark.id, bookmarkUpdates, function(createdBookmark) {
+        manager.update(existingBookmark.id, bookmarkUpdates, function(createdBookmark) {
           debug('updated bookmark since code was different ' + newBookmark.title);
           return callback(createdBookmark.id);
         });
       } else {
         // when bookmark doesnt exist yet
-        chrome.bookmarks.create(newBookmark, function(createdBookmark) {
+        manager.create(newBookmark, function(createdBookmark) {
           debug(`created new bookmark ${newBookmark.title}`);
           return callback(createdBookmark.id);
         });

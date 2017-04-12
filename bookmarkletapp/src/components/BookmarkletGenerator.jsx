@@ -19,7 +19,7 @@ import safeEval from 'safe-eval';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/keymap/vim';
 
-import BookmarkletChrome from '../Chrome.jsx';
+import BrowserBookmarkManager from '../Chrome.jsx';
 
 const LOCAL_STORAGE_KEY = 'bookmarklet-generator-state';
 
@@ -43,7 +43,7 @@ export default class BookmarkletGenerator extends Component {
       keyMap: 'default',
       lineNumbers: true,
     };
-    this.chrome = new BookmarkletChrome();
+    this.browserBookmarksManager = new BrowserBookmarkManager();
     this.updateSource = this.updateSource.bind(this);
     this.saveSource = this.saveSource.bind(this);
     // this.updateEditorKeymap = this.updateEditorKeymap.bind(this);
@@ -88,7 +88,7 @@ export default class BookmarkletGenerator extends Component {
       })();
     `);
 
-    this.chrome.sync(functions)
+    this.browserBookmarksManager.sync(functions)
       .then(result => console.info(result))
       .catch(err => {
         this.setState({
