@@ -12,7 +12,7 @@
   "options_page": "bookmarkletapp/dist/index.html",
   "name": "Bookmarklet manager",
   "description": "Helps you to keep your bookmarklets and makes it easy to edit them",
-  "homepage_url": "http://github.com/fpereira1/bookmarklet_manage",
+  "homepage_url": "http://github.com/vimark1/bookmarklet_manage",
   "icons": {
     "16": "icon-16.png",
     "48": "icon-48.png",
