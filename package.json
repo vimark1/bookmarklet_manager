@@ -6,6 +6,7 @@
   "scripts": {
     "bump-version": "standard-version",
     "postbump-version": "node scripts/version.js && git add manifest.json && git commit -m 'update manifest'",
+    "start": "cd bookmarkletapp/ && npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
