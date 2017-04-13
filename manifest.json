@@ -1,7 +1,6 @@
 {
   "background": {
     "scripts": [
-      "template.js",
       "background.js"
     ]
   },
