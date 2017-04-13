@@ -5,12 +5,8 @@ import { List, ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Avatar from 'material-ui/Avatar';
 import FileFolder from 'material-ui/svg-icons/file/folder';
-// import AlertError from 'material-ui/svg-icons/file/error';
 import RaisedButton from 'material-ui/RaisedButton';
 import Snackbar from 'material-ui/Snackbar';
-
-// import SelectField from 'material-ui/SelectField';
-// import MenuItem from 'material-ui/MenuItem';
 
 import { Grid, Row, Col } from 'react-flexbox-grid';
 
@@ -19,7 +15,7 @@ import safeEval from 'safe-eval';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/keymap/vim';
 
-import BookmarkletChrome from '../Chrome.jsx';
+import BrowserBookmarkManager from '../BrowserBookmarkManager';
 
 const LOCAL_STORAGE_KEY = 'bookmarklet-generator-state';
 
@@ -43,7 +39,7 @@ export default class BookmarkletGenerator extends Component {
       keyMap: 'default',
       lineNumbers: true,
     };
-    this.chrome = new BookmarkletChrome();
+    this.browserBookmarksManager = new BrowserBookmarkManager();
     this.updateSource = this.updateSource.bind(this);
     this.saveSource = this.saveSource.bind(this);
     // this.updateEditorKeymap = this.updateEditorKeymap.bind(this);
@@ -88,7 +84,7 @@ export default class BookmarkletGenerator extends Component {
       })();
     `);
 
-    this.chrome.sync(functions)
+    this.browserBookmarksManager.sync(functions)
       .then(result => console.info(result))
       .catch(err => {
         this.setState({
