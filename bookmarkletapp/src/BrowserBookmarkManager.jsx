@@ -1,32 +1,12 @@
 var debug = console.info;
 // var debug = function() {};
 
-class BookmarkManagerInterface {
-  getItems() {}
-  create() {}
-  update() {}
-}
-
-class ChromeBookmarkManager extends BookmarkManagerInterface {
-  getItems(id, callback) {
-    return chrome.bookmarks.getChildren(id, callback);
-  }
-
-  create(bookmarkObject, callback) {
-    return chrome.bookmarks.create(bookmarkObject, callback);
-  }
-
-  update(id, bookmarkObject, callback) {
-    return chrome.bookmarks.update(id, bookmarkObject, callback);
-  }
-}
+import BookmarkManagerFactory from './BookmarkManagerFactory';
 
 export default class BrowserBookmarkManager {
 
-  constuctor () {
-    this.sync = this.sync.bind(this);
-    this.createOrReuseFolder = this.createOrReuseFolder.bind(this);
-    this.manager = new ChromeBookmarkManager();
+  constructor () {
+    this.manager = BookmarkManagerFactory.getInstance();
   }
 
   /**

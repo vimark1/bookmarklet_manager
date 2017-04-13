@@ -5,12 +5,8 @@ import { List, ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Avatar from 'material-ui/Avatar';
 import FileFolder from 'material-ui/svg-icons/file/folder';
-// import AlertError from 'material-ui/svg-icons/file/error';
 import RaisedButton from 'material-ui/RaisedButton';
 import Snackbar from 'material-ui/Snackbar';
-
-// import SelectField from 'material-ui/SelectField';
-// import MenuItem from 'material-ui/MenuItem';
 
 import { Grid, Row, Col } from 'react-flexbox-grid';
 
@@ -19,7 +15,7 @@ import safeEval from 'safe-eval';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/keymap/vim';
 
-import BrowserBookmarkManager from '../Chrome.jsx';
+import BrowserBookmarkManager from '../BrowserBookmarkManager';
 
 const LOCAL_STORAGE_KEY = 'bookmarklet-generator-state';
 
