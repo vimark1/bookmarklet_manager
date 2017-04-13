@@ -1,5 +1,7 @@
 # Bookmarklet Manager
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/fpereira1/bookmarklet_manager.svg?token=06b88d74c2576d9babc8041c2bd698628d31263952fac73e734b6a466a025e8a)](https://greenkeeper.io/)
+
 A chrome extension that helps you to manage, easily add bookmarklets on chrome
 
 Road map for development:
@@ -19,4 +21,3 @@ Todo:
 
 - Display a visual error when something went wrong
 - Provide feedback when saved
-
