@@ -8,10 +8,10 @@
     "default_icon": "icon-128.png",
     "default_title": "Bookmarklet manager"
   },
-  "options_page": "bookmarkletapp/dist/index.html",
+  "options_page": "dist/index.html",
   "name": "Bookmarklet manager",
   "description": "Helps you to keep your bookmarklets and makes it easy to edit them",
-  "homepage_url": "http://github.com/vimark1/bookmarklet_manage",
+  "homepage_url": "http://github.com/arkvim/bookmarklet_manage",
   "icons": {
     "16": "icon-16.png",
     "48": "icon-48.png",
