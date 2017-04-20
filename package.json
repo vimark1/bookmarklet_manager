@@ -1,6 +1,6 @@
 {
   "name": "bookmarklet_manager",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Create bookmarklets in the browser",
   "main": "background.js",
   "scripts": {
