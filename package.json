@@ -9,7 +9,7 @@
     "postbuild": "npm pack && tar2zip *.tgz && rm -f *.tgz && mv *.zip builds/",
     "bump-version": "standard-version",
     "eslint": "eslint . --ext .jsx --ext .js",
-    "postbump-version": "node scripts/version.js && git add manifest.json && git commit -m 'update manifest'",
+    "postbump-version": "node scripts/version.js && git add manifest.json && git commit --amend --no-edit",
     "start": "webpack-dev-server --inline",
     "test": "npm run eslint"
   },
