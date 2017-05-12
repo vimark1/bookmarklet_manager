@@ -2,28 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-<a name="1.0.6"></a>
-## [1.0.6](https://github.com/fpereira1/bookmarklet_manager/compare/v1.0.5...v1.0.6) (2017-05-04)
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/fpereira1/bookmarklet_manager/compare/v1.0.3...v1.1.0) (2017-05-19)
 
 
+### Features
 
-<a name="1.0.5"></a>
-## [1.0.5](https://github.com/fpereira1/bookmarklet_manager/compare/v1.0.4...v1.0.5) (2017-05-04)
-
-
-
-<a name="1.0.4"></a>
-## [1.0.4](https://github.com/fpereira1/bookmarklet_manager/compare/v1.0.3...v1.0.4) (2017-05-04)
-
-
-
-<a name="1.0.3"></a>
-## [1.0.3](https://github.com/fpereira1/bookmarklet_manager/compare/v1.0.2...v1.0.3) (2017-04-20)
-
-
-
-<a name="1.0.2"></a>
-## [1.0.2](https://github.com/fpereira1/bookmarklet_manager/compare/v1.0.1...v1.0.2) (2017-04-13)
+* remove functions on sync #10 ([5af44b9](https://github.com/fpereira1/bookmarklet_manager/commit/5af44b9))
 
 
 
