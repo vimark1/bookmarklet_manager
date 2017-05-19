@@ -1,15 +1,15 @@
 {
   "name": "bookmarklet_manager",
-  "version": "1.0.6",
-  "description": "Create bookmarklets in the browser",
+  "version": "1.0.9",
+  "description": "Create and edit bookmarklets in the browser",
   "main": "background.js",
   "scripts": {
     "prebuild": "npm run bump-version",
     "build": "cross-env NODE_ENV=production webpack -p",
     "postbuild": "npm pack && tar2zip *.tgz && rm -f *.tgz && mv *.zip builds/",
     "bump-version": "standard-version",
-    "eslint": "eslint . --ext .jsx --ext .js",
     "postbump-version": "node scripts/version.js && git add manifest.json && git commit --amend --no-edit",
+    "eslint": "eslint . --ext .jsx --ext .js",
     "start": "webpack-dev-server --inline",
     "test": "npm run eslint"
   },

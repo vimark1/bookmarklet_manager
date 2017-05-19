@@ -12,4 +12,9 @@ export default class ChromeBookmarkManager extends BookmarkManagerInterface {
   update(id, bookmarkObject, callback) {
     return chrome.bookmarks.update(id, bookmarkObject, callback);
   }
+
+  remove(id, callback) {
+    return chrome.bookmarks.remove(id, callback);
+  }
+
 }

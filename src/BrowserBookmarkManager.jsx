@@ -19,7 +19,7 @@ export default class BrowserBookmarkManager {
     const bookmarkBarId = '1'; // this is the default bookmark id in chrome
 
     if(!Array.isArray(bookmarkletFunctions)) {
-      return Promise.reject('no bookmarklet functions found');
+      return Promise.reject('No bookmarklet functions found');
     }
 
     if(bookmarkletFunctions.some(fun => typeof fun !== 'function')) {
@@ -31,16 +31,50 @@ export default class BrowserBookmarkManager {
       title: 'Bookmarklet manager'
     };
 
-    return new Promise(function(resolve) {
+    return new Promise(function(resolve, reject) {
       self.createOrReuseFolder(bookmarkBarId, newBookmarkFolder, function(folderId) {
         var count = 0;
         bookmarkletFunctions.forEach(function(func) {
           var newBookmark = self.createBookmarkFromFunction(folderId, func);
           self.syncBookmark(folderId, newBookmark, function() {
             if(++count === bookmarkletFunctions.length) {
-              resolve('Bookmarklet sync completed');
+              self.removeUnusedFunctions(bookmarkletFunctions, folderId, function(err) {
+                if(err) {
+                  return reject(err);
+                }
+                resolve('Bookmarklet sync completed');
+              });
             }
           });
+        });
+      });
+    });
+  }
+
+  removeUnusedFunctions(functions, folderId, callback) {
+    const self = this;
+    functions = [...functions];
+    if(!callback) {
+      callback = function() {};
+    }
+    functions = functions.reduce(function(acc, cur) {
+      acc[cur.name] = true;
+      return acc;
+    }, {});
+    this.manager.getItems(folderId, function(children) {
+      const toRemove = [];
+      children.forEach(item => {
+        if(!functions[item.title]){
+          toRemove.push(item.id);
+        }
+      });
+      let count = 0;
+      console.log({toRemove});
+      toRemove.forEach(item => {
+        self.manager.remove(item, function() {
+          if(++count === toRemove.length) {
+            callback(null, toRemove);
+          }
         });
       });
     });
