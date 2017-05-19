@@ -69,7 +69,6 @@ export default class BrowserBookmarkManager {
         }
       });
       let count = 0;
-      console.log({toRemove});
       toRemove.forEach(item => {
         self.manager.remove(item, function() {
           if(++count === toRemove.length) {
